@@ -207,7 +207,7 @@ If you have questions about privacy or security:
 1. **Inspect the code:** [GitHub Repository](https://github.com/heelago/zotero-architect)
 2. **Check network traffic:** Use Developer Tools to see all API calls
 3. **Review third-party policies:** Links provided above
-4. **Contact:** [Your contact information]
+4. **Contact:** contact@h2eapps.com
 
 ---
 
@@ -215,5 +215,5 @@ If you have questions about privacy or security:
 
 This privacy policy may be updated. The latest version is always available in the GitHub repository.
 
-**Last updated:** [Date will be set when repository is created]
+**Last updated:** January 3, 2026
 

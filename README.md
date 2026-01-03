@@ -2,6 +2,18 @@
 
 AI-powered Zotero library cleanup tool with duplicate detection, metadata enrichment, and smart organization.
 
+## 🔒 Privacy & Security
+
+**🔓 Open Source**: This app is fully open source. [Inspect the code yourself](https://github.com/yourusername/zotero-architect)
+
+**Your privacy matters:**
+- ✅ Your API keys stay in your browser (stored locally, never sent to our servers)
+- ✅ No backend server - this app runs entirely in your browser
+- ✅ No analytics or tracking - we have no idea who uses this app
+- ✅ Open for inspection - verify all API calls in your browser's Developer Tools
+
+**See [PRIVACY.md](PRIVACY.md) for complete privacy details and verification instructions.**
+
 ## Features
 
 - **Dashboard** — Overview of library health with stats on duplicates, missing metadata, and untagged items
@@ -82,6 +94,44 @@ See at-a-glance stats about your library health and quick action buttons to jump
 - Vite
 - Zotero Web API v3
 - Google Gemini 1.5 Flash
+
+## How to Verify Privacy
+
+You can verify our privacy claims yourself:
+
+1. **Inspect Network Traffic**
+   - Open Browser Developer Tools (F12)
+   - Go to Network tab
+   - Use the app normally
+   - Verify all requests go to:
+     - `api.zotero.org` (your Zotero library)
+     - `generativelanguage.googleapis.com` (Gemini AI - only if you use AI features)
+     - `api.crossref.org` (metadata lookup)
+     - `api.openalex.org` (metadata lookup)
+   - **No requests go to any server we control**
+
+2. **Inspect localStorage**
+   - Open Developer Tools → Application/Storage tab
+   - View Local Storage → your domain
+   - See exactly what's stored locally
+
+3. **Review Source Code**
+   - [GitHub Repository](https://github.com/yourusername/zotero-architect)
+   - Build from source and compare to deployed version
+
+See [PRIVACY.md](PRIVACY.md) for detailed verification instructions.
+
+## Open Source
+
+🔓 **This app is fully open source.** 
+
+- **Repository**: [GitHub](https://github.com/yourusername/zotero-architect)
+- **License**: MIT
+- **Inspect the code**: See exactly what data is sent where
+- **No hidden servers**: Verify no data collection or tracking
+- **Build from source**: Reproducible builds available
+
+No hidden servers, no data collection, no tracking.
 
 ## License
 

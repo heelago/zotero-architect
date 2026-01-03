@@ -183,6 +183,13 @@ const SetupPanel: React.FC<{ onComplete: (cfg: Config, geminiKey: string, readOn
               <li>API calls are made directly from your browser to Zotero, Crossref, OpenAlex, and Google Gemini</li>
             </ul>
             <p className="privacy-note">This is a client-side application. Your credentials are never transmitted to or stored by us.</p>
+            <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)', fontSize: '0.9rem' }}>
+              <p>
+                <strong>🔓 Open Source:</strong> This app is fully open source. 
+                <a href="https://github.com/yourusername/zotero-architect" target="_blank" rel="noopener noreferrer" style={{ marginLeft: '0.5rem' }}>View source code</a> · 
+                <a href="/PRIVACY.md" target="_blank" rel="noopener noreferrer" style={{ marginLeft: '0.5rem' }}>Full privacy details</a>
+              </p>
+            </div>
           </div>
         </div>
         
@@ -4347,8 +4354,10 @@ const App: React.FC = () => {
                 <button 
                   className="btn-secondary btn-sm" 
                   onClick={() => {
-                    if (confirm('This will clear all saved preferences, change log, and UI state. Your library data will not be affected. Continue?')) {
-                      // Clear all persisted data except config (user might want to keep connection)
+                    if (confirm('This will remove ALL stored data including:\n\n• Your Zotero API key and library ID\n• Your Gemini API key (if provided)\n• All preferences and UI state\n• Change log and pending changes\n• Chat history\n\nYou will need to re-enter your API keys to use the app again.\n\nYour Zotero library data will NOT be affected.\n\nContinue?')) {
+                      // Clear ALL persisted data including API keys
+                      localStorage.removeItem(STORAGE_KEYS.CONFIG);
+                      localStorage.removeItem(STORAGE_KEYS.GEMINI_KEY);
                       localStorage.removeItem(STORAGE_KEYS.CHANGE_LOG);
                       localStorage.removeItem(STORAGE_KEYS.PENDING_EXPORT);
                       localStorage.removeItem(STORAGE_KEYS.REVIEWED_ITEMS);
@@ -4357,8 +4366,14 @@ const App: React.FC = () => {
                       localStorage.removeItem(STORAGE_KEYS.CHAT_MESSAGES);
                       localStorage.removeItem(STORAGE_KEYS.READ_ONLY_MODE);
                       localStorage.removeItem(STORAGE_KEYS.ACTIVE_TAB);
+                      localStorage.removeItem(STORAGE_KEYS.PENDING_REPAIRS);
+                      localStorage.removeItem(STORAGE_KEYS.VERIFICATION_REPORTS);
+                      localStorage.removeItem(STORAGE_KEYS.EXPORT_TYPE);
+                      localStorage.removeItem(STORAGE_KEYS.EXPORT_FORMAT);
                       
-                      // Reset state
+                      // Reset all state including config and API keys
+                      setConfig(null);
+                      setGeminiApiKey('');
                       setChangeLog([]);
                       setPendingExportChanges(new Map());
                       setReviewedItems(new Set());
@@ -4372,11 +4387,16 @@ const App: React.FC = () => {
                       setReadOnlyMode(false);
                       setActiveTab('home');
                       
-                      addNotification('Local storage cleared successfully', 'success');
+                      addNotification('All stored data cleared successfully. Page will reload.', 'success');
+                      
+                      // Reload page to fully reset state
+                      setTimeout(() => {
+                        window.location.reload();
+                      }, 1000);
                     }
                   }}
                 >
-                  Clear All Saved Data
+                  Clear All Stored Data
                 </button>
               </div>
             </div>
@@ -4472,14 +4492,121 @@ const App: React.FC = () => {
               </HelpBox>
               
               <HelpBox title="Data Privacy & Security">
-                <p><strong>Your data stays private:</strong></p>
-                <ul>
-                  <li>All API keys are stored locally in your browser only</li>
-                  <li>No data is sent to our servers - all processing happens in your browser</li>
-                  <li>Direct API calls are made to Zotero, Crossref, OpenAlex, and Google Gemini</li>
-                  <li>You can use read-only mode to review changes before applying them</li>
-                </ul>
-                <p><strong>API Usage:</strong> When using AI features, your item metadata is sent to Google's Gemini API. Review Google's privacy policy for details.</p>
+                <div className="privacy-item">
+                  <strong>✓ Your API keys stay in your browser</strong>
+                  <p>Keys are stored locally in localStorage and sent directly to Zotero/Gemini. They never pass through our servers.</p>
+                </div>
+                
+                <div className="privacy-item">
+                  <strong>✓ No backend server</strong>
+                  <p>This app runs entirely in your browser. We don't operate any server that processes your data.</p>
+                </div>
+                
+                <div className="privacy-item">
+                  <strong>✓ No analytics or tracking</strong>
+                  <p>We don't use Google Analytics or any tracking tools. We have no idea who uses this app or how.</p>
+                </div>
+                
+                <div className="privacy-item">
+                  <strong>✓ Open for inspection</strong>
+                  <p>You can inspect network traffic in your browser's Developer Tools to verify all API calls go directly to their destinations.</p>
+                </div>
+                
+                <div className="privacy-item">
+                  <strong>⚠ What we can't guarantee</strong>
+                  <p>Your data is sent to third-party APIs (Zotero, Google Gemini, Crossref, OpenAlex). Please review their privacy policies.</p>
+                </div>
+                
+                <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)' }}>
+                  <p><strong>Open Source:</strong> This app is fully open source. <a href="https://github.com/yourusername/zotero-architect" target="_blank" rel="noopener noreferrer">Inspect the code yourself</a> or view <a href="/PRIVACY.md" target="_blank" rel="noopener noreferrer">full privacy details</a>.</p>
+                </div>
+              </HelpBox>
+              
+              <HelpBox title="Verify for Yourself">
+                <p><strong>How to verify your privacy:</strong></p>
+                <ol>
+                  <li><strong>Open Browser Developer Tools</strong> (F12 or Cmd+Option+I)</li>
+                  <li><strong>Go to the Network tab</strong></li>
+                  <li><strong>Use the app normally</strong></li>
+                  <li><strong>Observe:</strong> All requests go to:
+                    <ul>
+                      <li><code>api.zotero.org</code> (your Zotero library)</li>
+                      <li><code>generativelanguage.googleapis.com</code> (Gemini AI - only if you use AI features)</li>
+                      <li><code>api.crossref.org</code> (metadata lookup)</li>
+                      <li><code>api.openalex.org</code> (metadata lookup)</li>
+                    </ul>
+                    <strong>No requests go to any server we control.</strong>
+                  </li>
+                </ol>
+                <p style={{ marginTop: '1rem' }}>You can also inspect localStorage in the Application/Storage tab to see exactly what's stored locally.</p>
+              </HelpBox>
+              
+              <HelpBox title="What's Stored Locally">
+                <p>The following data is stored in your browser's localStorage:</p>
+                <table style={{ width: '100%', marginTop: '0.5rem', fontSize: '0.9rem' }}>
+                  <thead>
+                    <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                      <th style={{ textAlign: 'left', padding: '0.5rem' }}>Key</th>
+                      <th style={{ textAlign: 'left', padding: '0.5rem' }}>Purpose</th>
+                      <th style={{ textAlign: 'left', padding: '0.5rem' }}>Sensitive?</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={{ padding: '0.5rem' }}><code>zotero-architect-config</code></td>
+                      <td style={{ padding: '0.5rem' }}>Zotero API key and library ID</td>
+                      <td style={{ padding: '0.5rem' }}>Yes</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '0.5rem' }}><code>zotero-architect-gemini-key</code></td>
+                      <td style={{ padding: '0.5rem' }}>Gemini API key (optional)</td>
+                      <td style={{ padding: '0.5rem' }}>Yes</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '0.5rem' }}><code>zotero-architect-changelog</code></td>
+                      <td style={{ padding: '0.5rem' }}>Change log of modifications</td>
+                      <td style={{ padding: '0.5rem' }}>No</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '0.5rem' }}><code>zotero-architect-pending-export</code></td>
+                      <td style={{ padding: '0.5rem' }}>Pending changes for export</td>
+                      <td style={{ padding: '0.5rem' }}>No</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '0.5rem' }}><code>zotero-architect-reviewed-items</code></td>
+                      <td style={{ padding: '0.5rem' }}>Items you've reviewed</td>
+                      <td style={{ padding: '0.5rem' }}>No</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '0.5rem' }}><code>zotero-architect-expanded-cards</code></td>
+                      <td style={{ padding: '0.5rem' }}>UI state (expanded sections)</td>
+                      <td style={{ padding: '0.5rem' }}>No</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '0.5rem' }}><code>zotero-architect-filter-state</code></td>
+                      <td style={{ padding: '0.5rem' }}>Filter preferences</td>
+                      <td style={{ padding: '0.5rem' }}>No</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '0.5rem' }}><code>zotero-architect-chat-messages</code></td>
+                      <td style={{ padding: '0.5rem' }}>Chat conversation history</td>
+                      <td style={{ padding: '0.5rem' }}>No</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '0.5rem' }}><code>zotero-architect-readonly-mode</code></td>
+                      <td style={{ padding: '0.5rem' }}>Read-only mode preference</td>
+                      <td style={{ padding: '0.5rem' }}>No</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '0.5rem' }}><code>zotero-architect-active-tab</code></td>
+                      <td style={{ padding: '0.5rem' }}>Last active tab</td>
+                      <td style={{ padding: '0.5rem' }}>No</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                  All data is stored locally in your browser only. You can clear it at any time using the "Clear All Stored Data" button above.
+                </p>
               </HelpBox>
               
               <HelpBox title="Disclaimers">
@@ -6266,6 +6393,29 @@ const App: React.FC = () => {
           </div>
         )}
       </main>
+      
+      {/* Footer with privacy and open source links */}
+      <footer style={{ 
+        padding: '1rem 2rem', 
+        borderTop: '1px solid var(--border-color)', 
+        backgroundColor: 'var(--bg-secondary)',
+        fontSize: '0.9rem',
+        color: 'var(--text-muted)',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: '1rem'
+      }}>
+        <div>
+          <strong>🔓 Open Source:</strong> This app is fully open source. 
+          <a href="https://github.com/yourusername/zotero-architect" target="_blank" rel="noopener noreferrer" style={{ marginLeft: '0.5rem', color: 'var(--primary)' }}>View source code</a>
+        </div>
+        <div>
+          <a href="/PRIVACY.md" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)', marginRight: '1rem' }}>Privacy Policy</a>
+          <span>No tracking · No analytics · No backend server</span>
+        </div>
+      </footer>
     </div>
   );
 };

@@ -4,7 +4,7 @@ AI-powered Zotero library cleanup tool with duplicate detection, metadata enrich
 
 ## 🔒 Privacy & Security
 
-**🔓 Open Source**: This app is fully open source. [Inspect the code yourself](https://github.com/yourusername/zotero-architect)
+**🔓 Open Source**: This app is fully open source. [Inspect the code yourself](https://github.com/heelago/zotero-architect)
 
 **Your privacy matters:**
 - ✅ Your API keys stay in your browser (stored locally, never sent to our servers)
@@ -116,7 +116,7 @@ You can verify our privacy claims yourself:
    - See exactly what's stored locally
 
 3. **Review Source Code**
-   - [GitHub Repository](https://github.com/yourusername/zotero-architect)
+   - [GitHub Repository](https://github.com/heelago/zotero-architect)
    - Build from source and compare to deployed version
 
 See [PRIVACY.md](PRIVACY.md) for detailed verification instructions.
@@ -125,7 +125,7 @@ See [PRIVACY.md](PRIVACY.md) for detailed verification instructions.
 
 🔓 **This app is fully open source.** 
 
-- **Repository**: [GitHub](https://github.com/yourusername/zotero-architect)
+- **Repository**: [GitHub](https://github.com/heelago/zotero-architect)
 - **License**: MIT
 - **Inspect the code**: See exactly what data is sent where
 - **No hidden servers**: Verify no data collection or tracking

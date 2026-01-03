@@ -186,7 +186,7 @@ const SetupPanel: React.FC<{ onComplete: (cfg: Config, geminiKey: string, readOn
             <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)', fontSize: '0.9rem' }}>
               <p>
                 <strong>🔓 Open Source:</strong> This app is fully open source. 
-                <a href="https://github.com/yourusername/zotero-architect" target="_blank" rel="noopener noreferrer" style={{ marginLeft: '0.5rem' }}>View source code</a> · 
+                <a href="https://github.com/heelago/zotero-architect" target="_blank" rel="noopener noreferrer" style={{ marginLeft: '0.5rem' }}>View source code</a> · 
                 <a href="/PRIVACY.md" target="_blank" rel="noopener noreferrer" style={{ marginLeft: '0.5rem' }}>Full privacy details</a>
               </p>
             </div>
@@ -4518,7 +4518,7 @@ const App: React.FC = () => {
                 </div>
                 
                 <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)' }}>
-                  <p><strong>Open Source:</strong> This app is fully open source. <a href="https://github.com/yourusername/zotero-architect" target="_blank" rel="noopener noreferrer">Inspect the code yourself</a> or view <a href="/PRIVACY.md" target="_blank" rel="noopener noreferrer">full privacy details</a>.</p>
+                  <p><strong>Open Source:</strong> This app is fully open source. <a href="https://github.com/heelago/zotero-architect" target="_blank" rel="noopener noreferrer">Inspect the code yourself</a> or view <a href="/PRIVACY.md" target="_blank" rel="noopener noreferrer">full privacy details</a>.</p>
                 </div>
               </HelpBox>
               
@@ -6409,7 +6409,7 @@ const App: React.FC = () => {
       }}>
         <div>
           <strong>🔓 Open Source:</strong> This app is fully open source. 
-          <a href="https://github.com/yourusername/zotero-architect" target="_blank" rel="noopener noreferrer" style={{ marginLeft: '0.5rem', color: 'var(--primary)' }}>View source code</a>
+          <a href="https://github.com/heelago/zotero-architect" target="_blank" rel="noopener noreferrer" style={{ marginLeft: '0.5rem', color: 'var(--primary)' }}>View source code</a>
         </div>
         <div>
           <a href="/PRIVACY.md" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)', marginRight: '1rem' }}>Privacy Policy</a>

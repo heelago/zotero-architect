@@ -2,7 +2,7 @@
 
 ## Open Source
 
-🔓 **This app is fully open source.** You can inspect the code yourself: [GitHub Repository](https://github.com/yourusername/zotero-architect)
+🔓 **This app is fully open source.** You can inspect the code yourself: [GitHub Repository](https://github.com/heelago/zotero-architect)
 
 No hidden servers, no data collection, no tracking.
 
@@ -103,7 +103,7 @@ When you use this app, your data is sent to third-party APIs. Here's what each s
 
 ### 3. Review Source Code
 
-- **GitHub Repository:** [View Source Code](https://github.com/yourusername/zotero-architect)
+- **GitHub Repository:** [View Source Code](https://github.com/heelago/zotero-architect)
 - **Inspect the code:** See exactly what data is sent where
 - **Verify:** No hidden API calls, no analytics, no tracking
 
@@ -204,7 +204,7 @@ You can delete all stored data at any time:
 
 If you have questions about privacy or security:
 
-1. **Inspect the code:** [GitHub Repository](https://github.com/yourusername/zotero-architect)
+1. **Inspect the code:** [GitHub Repository](https://github.com/heelago/zotero-architect)
 2. **Check network traffic:** Use Developer Tools to see all API calls
 3. **Review third-party policies:** Links provided above
 4. **Contact:** [Your contact information]
